@@ -478,7 +478,7 @@ Create a grading interface for instructors:
 
 ### Option 1: Vercel Blob (Recommended for MVP)
 ```bash
-npm install @vercel/blob
+pnpm add @vercel/blob
 ```
 
 **Why:**
@@ -570,10 +570,16 @@ export async function POST(request: Request) {
 ### Database Migrations
 ```bash
 # Push schema changes to Neon
-npm run db:push
+pnpm db:push
 
 # Generate migrations (for production)
-npm run db:generate
+pnpm db:generate
+
+# Open Drizzle Studio (visual database browser)
+pnpm db:studio
+
+# Seed test data
+pnpm db:seed
 ```
 
 ---
@@ -659,7 +665,8 @@ When v0 generates a component, Claude Code should:
 
 ### Required Tools
 - Node.js 18+
-- npm or yarn
+- **pnpm** (this project uses pnpm, not npm or yarn)
+  - Install with: `npm install -g pnpm` or `brew install pnpm`
 - Neon account (free tier)
 - Vercel account (free tier)
 - Git
@@ -676,8 +683,9 @@ BLOB_READ_WRITE_TOKEN="vercel-blob-token"
 ```bash
 npx create-next-app@latest canvas-mvp --typescript --tailwind --app
 cd canvas-mvp
-npm install drizzle-orm postgres @vercel/blob next-auth react-query zustand react-dropzone recharts
-npm install -D drizzle-kit @types/node
+# This project uses pnpm
+pnpm add drizzle-orm postgres @vercel/blob next-auth bcryptjs @tanstack/react-query zustand react-dropzone recharts
+pnpm add -D drizzle-kit @types/node @types/bcryptjs dotenv tsx
 npx shadcn-ui@latest init
 ```
 
@@ -702,10 +710,10 @@ Now go build it. 🚀
 
 ## Quick Start Checklist
 
-- [ ] Clone repo, run `npm install`
+- [ ] Clone repo, run `pnpm install`
 - [ ] Create Neon database, copy connection string to `.env.local`
-- [ ] Run `npm run db:push` to create tables
-- [ ] Start dev server: `npm run dev`
+- [ ] Run `pnpm db:push` to create tables
+- [ ] Start dev server: `pnpm dev`
 - [ ] Create instructor account at `/signup`
 - [ ] Create first course
 - [ ] Test full flow: create assignment → join as student → submit → grade → view
@@ -713,3 +721,23 @@ Now go build it. 🚀
 - [ ] Share with first users
 
 **Time to ship: 6 hours. Time to impact: immediate.**
+
+---
+
+## Important Project Notes
+
+### Package Manager
+**This project uses pnpm, not npm or yarn.** All commands should use `pnpm` instead of `npm run`:
+- ✅ Correct: `pnpm dev`, `pnpm db:push`, `pnpm add <package>`
+- ❌ Wrong: `npm run dev`, `npm install`, `yarn dev`
+
+### Database Setup Status
+The database structure has been fully configured with:
+- Complete schema in `src/db/schema.ts` (users, courses, enrollments, assignments, submissions, grades, announcements)
+- Drizzle ORM configuration in `drizzle.config.ts`
+- Database connection in `src/db/index.ts`
+- Seed script in `src/db/seed.ts`
+- Test endpoint at `/api/test-db`
+- Environment variables in `.env.local` (DATABASE_URL needs Neon connection string)
+
+Next steps: Complete Neon setup → Install dependencies → Push schema → Start building auth & API routes
