@@ -24,8 +24,8 @@ interface AppSidebarProps {
 const navItems = [
   { label: "Dashboard", href: "/", icon: LayoutDashboard },
   { label: "Assignments", href: "/assignments", icon: FileText },
-  { label: "Grading", href: "/grading", icon: ClipboardCheck },
-  { label: "Analytics", href: "/analytics", icon: BarChart3 },
+  // { label: "Grading", href: "/grading", icon: ClipboardCheck }, // Instructor only
+  // { label: "Analytics", href: "/analytics", icon: BarChart3 }, // Instructor only
   { label: "Announcements", href: "/announcements", icon: Megaphone },
   { label: "Settings", href: "/settings", icon: Settings },
 ]
